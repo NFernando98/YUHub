@@ -1,4 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
+import { SearchBar } from "./SearchBar";
 
 const backgroundStyle = {
     position: 'absolute',
@@ -10,6 +11,8 @@ const backgroundStyle = {
 
 export default function Background() {
     return(
-        <div style={backgroundStyle}></div>
+        <div style={backgroundStyle}>
+            <SearchBar></SearchBar>
+        </div>
     )
 }
