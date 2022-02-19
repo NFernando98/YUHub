@@ -18,3 +18,5 @@ setTimeout(()=>{
       console.log(`Welcome back ${username}`)
     }
   }, 2000);
+
+console.log("%cYUHub!", "font-size:5em; color: blue");

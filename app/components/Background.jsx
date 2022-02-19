@@ -1,4 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
+import { AdeleViewer } from "./AdeleBot";
 import { GuestLoginPortal } from "./GuestLoginPortal";
 import { SearchBar } from "./SearchBar";
 import { ToolBar } from "./ToolBar";
@@ -19,6 +20,7 @@ export default function Background() {
             <SearchBar></SearchBar>
             <GuestLoginPortal></GuestLoginPortal>
             <ToolBar></ToolBar>
+            <AdeleViewer></AdeleViewer>
         </div>
     )
 }
