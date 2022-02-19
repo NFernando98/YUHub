@@ -1,7 +1,9 @@
 import React, { useEffect, useRef, useState } from "react";
 import { AdeleViewer } from "./AdeleBot";
 import { CallTrigger } from "./callTrigger";
+import { Chat } from "./Chat";
 import { GuestLoginPortal } from "./GuestLoginPortal";
+import { PeerAvatar } from "./PeerAvatar";
 import { SearchBar } from "./SearchBar";
 import { ToolBar } from "./ToolBar";
 import { UserProfile } from "./UserProfile";
@@ -21,8 +23,10 @@ export default function Background() {
             <SearchBar></SearchBar>
             <GuestLoginPortal></GuestLoginPortal>
             <ToolBar></ToolBar>
+            <PeerAvatar></PeerAvatar>
             <AdeleViewer></AdeleViewer>
             <CallTrigger></CallTrigger>
+            <Chat></Chat>
         </div>
     )
 }

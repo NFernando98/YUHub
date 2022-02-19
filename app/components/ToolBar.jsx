@@ -18,6 +18,8 @@ export function ToolBar() {
     
             <button className="circular ui icon button" style={{
                 backgroundColor: "red"
+            }} onClick={()=>{
+                window.$('#chatContainer').modal('show');
             }}>
                 <i className="icon chat"></i>
             </button>

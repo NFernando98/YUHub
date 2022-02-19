@@ -2,8 +2,11 @@ import React, { useEffect, useRef, useState } from "react";
 
 export function SearchBar(props) {
     function searchByNewFilter(){
-        const filter_value = document.querySelector("#searchRoomValue")
-        console.log(`searching for ${filter_value.value}`);
+        const filter_value = document.querySelector("#searchRoomValue").value;
+
+        localStorage.setItem("interest", filter_value);
+        console.log(`searching for ${filter_value}`);
+        window.socket.emit("updateInterest", {name: localStorage.getItem("username"), programme: localStorage.getItem("programme"), interest: localStorage.getItem("interest")})
     }
     return(
         <div style={{

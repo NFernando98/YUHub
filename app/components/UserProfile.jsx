@@ -11,7 +11,7 @@ export function UserProfile(){
         if(!userNameTextField.value){
             userNameTextField.value = localStorage.getItem("username");
         }
-        window.$('.ui.modal').modal('show');
+        window.$('#loginPortal').modal('show');
     }
     return (
         <button className="circular ui icon button" style={{
