@@ -1,5 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
+import { GuestLoginPortal } from "./GuestLoginPortal";
 import { SearchBar } from "./SearchBar";
+import { UserProfile } from "./UserProfile";
 
 const backgroundStyle = {
     position: 'absolute',
@@ -12,7 +14,9 @@ const backgroundStyle = {
 export default function Background() {
     return(
         <div style={backgroundStyle}>
+            <UserProfile></UserProfile>
             <SearchBar></SearchBar>
+            <GuestLoginPortal></GuestLoginPortal>
         </div>
     )
 }
