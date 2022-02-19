@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import { GuestLoginPortal } from "./GuestLoginPortal";
 import { SearchBar } from "./SearchBar";
+import { ToolBar } from "./ToolBar";
 import { UserProfile } from "./UserProfile";
 
 const backgroundStyle = {
@@ -17,6 +18,7 @@ export default function Background() {
             <UserProfile></UserProfile>
             <SearchBar></SearchBar>
             <GuestLoginPortal></GuestLoginPortal>
+            <ToolBar></ToolBar>
         </div>
     )
 }
