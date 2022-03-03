@@ -67,6 +67,11 @@ socket.on("chat message", (msg)=>{
   }
 })
 
+socket.on("showUserAvatar", (user)=>{
+  if(user.name !== localStorage.getItem("username")){
+    document.querySelector("#peerEmoji").innerText = user.emoji;
+  }
+})
 window.socket = socket;
 
 export function Chat() {
