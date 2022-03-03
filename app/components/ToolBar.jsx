@@ -13,7 +13,7 @@ export function ToolBar() {
                 transform: 'translate(-50%, 80%) scale(2.0)'
             }}>
                 <button className="circular ui icon button" onClick={openAdele}>
-                <i className="fas fa-robot"></i>
+                <i className="icon android"></i>
             </button>
     
             <button className="circular ui icon button" style={{

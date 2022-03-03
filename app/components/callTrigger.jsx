@@ -12,7 +12,8 @@ function handleStream(stream){
         document.body.appendChild(audioFeedback); 
     }
     audioFeedback.srcObject = stream;
-    audioFeedback.play()
+    audioFeedback.play();
+  document.querySelector("#connectPeerStatus").innerText = "connected :)"
 }
 peer.on("call", (call) => {
     navigator.mediaDevices
@@ -24,6 +25,7 @@ peer.on("call", (call) => {
         call.answer(stream);
         call.on("stream", handleStream);
       });
+  document.querySelector("#connectPeerStatus").innerText = "connected :)"
   });
   
 function disconnectCaller(){

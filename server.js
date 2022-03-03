@@ -30,6 +30,10 @@ io.on("connection", function(socket) {
     io.emit("announceOldtimer", user);
 });
 
+  socket.on("showUserAvatar", function(user){
+    io.emit("showUserAvatar", user);
+});
+  
 socket.on("updateInterest", function(user){
     io.emit("updateInterest", user);
 });

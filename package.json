@@ -8,7 +8,7 @@
   "main": "server.js",
   "scripts": {
     "build": "webpack",
-    "start": "set HTTPS=true webpack && node server.js"
+    "start": "webpack && node server.js"
   },
   "dependencies": {
     "express": "^4.17.1",

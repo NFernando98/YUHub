@@ -16,8 +16,8 @@ export function UserProfile(){
     return (
         <button className="circular ui icon button" style={{
             // position: "absolute",
-            float: 'right',
-            transform: 'translate(-50%, 50%) scale(2.0)',
+            float: 'left',
+            transform: 'translate(50%, 50%) scale(2.0)',
         }} onClick={updateGuestProfile}>
         <i className="icon user"></i>
         </button>
