@@ -22,6 +22,21 @@ io.on("connection", function(socket) {
   socket.on("chat message", function(msg) {
     io.emit("chat message", msg);
   });
+  socket.on("pickedPeer", function(user){
+      io.emit("pickedPeer", user);
+  });
+
+  socket.on("announceOldtimer", function(user){
+    io.emit("announceOldtimer", user);
+});
+
+  socket.on("showUserAvatar", function(user){
+    io.emit("showUserAvatar", user);
+});
+  
+socket.on("updateInterest", function(user){
+    io.emit("updateInterest", user);
+});
 
   socket.on("disconnect", function() {
     console.log("a user disconnected");

@@ -98,7 +98,7 @@ export function AdeleViewer() {
             width: '30%',
             height: '30%',
             top: '50%',
-            left: '50%',
+            left: '20%',
             color: 'red',
             transform: 'translate(-90%, -10%) scale(.3)',
             zIndex: "-10"

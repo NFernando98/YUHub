@@ -1,61 +1,61 @@
 import React, { useEffect, useState, useRef, useCallback } from "react";
 
+const peerId = localStorage.getItem("username");
 
-export function CallTrigger() {
-    const audioRef = useRef(null);
-    const handleStream = useCallback(
-      (stream) => {
-        audioRef.current.srcObject = stream;
-      },
-      [audioRef]
-    );
-  
-    const [peer, setPeer] = useState();
-    const [peerID, setPeerID] = useState();
-    useEffect(() => {
-        const peerID = localStorage.getItem("username")
-        localStorage.setItem("peer-id", peerID);
-    
-        const peer = new Peer(peerID);
-        setPeer(peer);
-    
-        peer.on("open", (id) => {
-          setPeerID(peerID);
-        });
-    
-        peer.on("call", (call) => {
-          navigator.mediaDevices
-            .getUserMedia({
-              audio: true,
-              video: false
-            })
-            .then((stream) => {
-              call.answer(stream);
-              call.on("stream", handleStream);
-            });
-        });
-    
-        return () => {
-          peer.destroy();
-        };
-      }, [handleStream]);
-
-      const destination = "705508f1-b954-4575-a475-14eaf4e09d5f"
-      //"38d1e467-5dfc-4731-b8e1-b7e3ccf6a440";
-
-  const onCall = useCallback(() => {
+const peer = new Peer(peerId);
+const audioFeedback = document.createElement('audio');
+document.body.appendChild(audioFeedback);
+console.log(peerId, peer);
+function handleStream(stream){
+    if(!audioFeedback){
+        audioFeedback = document.createElement('audio');
+        document.body.appendChild(audioFeedback); 
+    }
+    audioFeedback.srcObject = stream;
+    audioFeedback.play();
+  document.querySelector("#connectPeerStatus").innerText = "connected :)"
+}
+peer.on("call", (call) => {
     navigator.mediaDevices
       .getUserMedia({
         audio: true,
         video: false
       })
       .then((stream) => {
-        const outgoing = peer.call(destination, stream);
-        outgoing.on("stream", handleStream);
+        call.answer(stream);
+        call.on("stream", handleStream);
       });
-  }, [peer, destination, handleStream]);
-
+  document.querySelector("#connectPeerStatus").innerText = "connected :)"
+  });
   
+function disconnectCaller(){
+    window.call.close();
+    audioFeedback.pause();
+    audioFeedback.srcObject = null;
+}
+
+function makeCall(){
+    const destination = window.peerUser;
+
+    if(!destination){
+        return;
+    }else if(destination == localStorage.getItem("username")){
+        return;
+    }
+   navigator.mediaDevices
+  .getUserMedia({
+      audio: true,
+      video: false
+  })
+  .then((stream) => {
+      const outgoing = peer.call(destination, stream);
+      outgoing.on("stream", handleStream);
+      window.call = outgoing;
+  });
+  }
+
+
+export function CallTrigger() {
     return(
         <div style={{
             position: 'absolute', 
@@ -63,16 +63,20 @@ export function CallTrigger() {
             left: '50%',
             color: 'red',
             transform: 'translate(-50%, 60%) scale(2.0)'
-        }}>
-            <button className="circular ui icon button" onClick={onCall}>
+        }} id="callTriggerButtons">
+            <button className="circular ui icon button" onClick={makeCall}>
             <div>Connect</div>
             <i className="icon phone" style={{color: "blue"}}></i>
         </button>
 
-        <button className="circular ui icon button">
+        <button className="circular ui icon button" onClick={disconnectCaller}>
             <div>Decline</div>
             <i className="icon phone" style={{color: "red"}}></i>
         </button>
         </div>
     )
 }
+
+// export function showCallTrigger(){
+//     window.$("#callTriggerButtons").toggle();
+// }

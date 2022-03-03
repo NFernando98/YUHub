@@ -4,12 +4,6 @@
     <title>Chat</title>
     <meta name="description" content="A cool thing made with Glitch" />
     <link href="style.css" media="screen" rel="stylesheet" type="text/css" />
-    <link
-      id="favicon"
-      rel="icon"
-      href="https://glitch.com/edit/favicon-app.ico"
-      type="image/x-icon"
-    />
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -21,6 +15,9 @@
     <script src="https://threejs.org/examples/js/controls/OrbitControls.js"></script>
     <script src="https://rawcdn.githack.com/mrdoob/three.js/r137/examples/js/loaders/GLTFLoader.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/peerjs/1.3.2/peerjs.min.js" integrity="sha512-4wTQ8feow93K3qVGVXUGLULDB9eAULiG+xdbaQH8tYZlXxYv9ij+evblXD0EOqmGWT8NBTd1vQGsURvrQzmKeg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/js-signals/1.0.0/js-signals.js"></script>
+    <script src="https://rawcdn.githack.com/justadudewhohacks/face-api.js/master/dist/face-api.js"></script>
+<!--     <video autoplay muted playsinline></video> -->
     <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/uuid/8.3.2/uuid.min.js" integrity="sha512-UNM1njAgOFUa74Z0bADwAq8gbTcqZC8Ej4xPSzpnh0l6KMevwvkBvbldF9uR++qKeJ+MOZHRjV1HZjoRvjDfNQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script> -->
     <link
       rel="stylesheet"
@@ -44,5 +41,63 @@
     <script src="/socket.io/socket.io.js"></script>
     <!-- bundle all the scripts! thanks to webpack -->
     <script type="text/javascript" src="/bundle.js"></script>
+    <script>
+      const faceExpression = function(){
+        const videoEl = document.createElement("video");
+        videoEl.setAttribute('id', 'video');
+        videoEl.setAttribute('autoplay', 'muted');
+        document.body.appendChild(videoEl)
+      
+        const models = "https://simhub.github.io/avatar-face-expression/models";
+        videoEl.style.display = "none";
+
+      async function initVideo() {
+        const stream = await navigator.mediaDevices.getUserMedia({ video: {} });
+        videoEl.srcObject = stream;
+        console.log("hahahhah")
+      }
+
+      Promise.all([
+        faceapi.nets.tinyFaceDetector.loadFromUri(models),
+        faceapi.nets.faceExpressionNet.loadFromUri(models)
+      ]).then(initVideo);
+
+      async function onPlay() {
+        // TODO get faceDetectorOptions
+        const options = new faceapi.TinyFaceDetectorOptions();
+        const result = await faceapi
+          .detectSingleFace(videoEl, options)
+          .withFaceExpressions();
+
+        if (result) {
+          const dimensions = faceapi.matchDimensions(document.querySelector("#yourEmoji"), videoEl, true);
+          const faceLocation = {
+            x: result.detection._box._x,
+            y: result.detection._box._y,
+            width: result.detection._box._width,
+            height: result.detection._box._height
+          };
+          const emotions = {
+            happy: "😀",
+            angry: "😡",
+            disgusted: "🤢",
+            fearful: "😱",
+            neutral: "😐",
+            surprised: "😳"
+          };
+          const currentEmotion = result.expressions.asSortedArray()[0].expression;
+          const selectedEmoji = emotions[currentEmotion] || "😐";
+          document.querySelector("#yourEmoji").innerText = selectedEmoji
+          
+          window.socket.emit("showUserAvatar", {name: localStorage.getItem("username"), emoji: selectedEmoji})
+          }
+
+          requestAnimationFrame(() => onPlay());
+        }
+
+      videoEl.onloadedmetadata = onPlay;
+      }
+      faceExpression();
+</script>
   </body>
 </html>

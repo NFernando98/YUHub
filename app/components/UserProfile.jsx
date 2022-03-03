@@ -11,13 +11,13 @@ export function UserProfile(){
         if(!userNameTextField.value){
             userNameTextField.value = localStorage.getItem("username");
         }
-        window.$('.ui.modal').modal('show');
+        window.$('#loginPortal').modal('show');
     }
     return (
         <button className="circular ui icon button" style={{
             // position: "absolute",
-            float: 'right',
-            transform: 'translate(-50%, 50%) scale(2.0)',
+            float: 'left',
+            transform: 'translate(50%, 50%) scale(2.0)',
         }} onClick={updateGuestProfile}>
         <i className="icon user"></i>
         </button>
